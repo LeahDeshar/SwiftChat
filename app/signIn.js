@@ -3,7 +3,7 @@ import React from "react";
 
 export default function signIn() {
   return (
-    <View>
+    <View className={"pt-20"}>
       <Text>signIn</Text>
     </View>
   );
