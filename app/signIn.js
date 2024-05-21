@@ -16,9 +16,12 @@ import {
 import { Octicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useRef } from "react";
+import { useState } from "react";
+import Loading from "../components/Loading";
 
 export default function signIn() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -74,6 +77,7 @@ export default function signIn() {
                 style={{ fontSize: hp(2) }}
                 className={"flex-1 font-semibold text-neutral-700"}
                 placeholder="Password"
+                secureTextEntry
                 placeholderTextColor={"gray"}
                 onChangeText={(value) => (passwordRef.current = value)}
               />
@@ -86,18 +90,26 @@ export default function signIn() {
             </Text>
           </View>
 
-          <TouchableOpacity
-            onPress={handleLogin}
-            style={{ height: hp(6.5) }}
-            className="bg-indigo-500 rounded-xl justify-center items-center"
-          >
-            <Text
-              className="text-white font-bold tracking-wider"
-              style={{ fontSize: hp(2.7) }}
-            >
-              Sign In
-            </Text>
-          </TouchableOpacity>
+          <View>
+            {loading ? (
+              <View className="flex-row justify-center">
+                <Loading size={hp(6.5)} />
+              </View>
+            ) : (
+              <TouchableOpacity
+                onPress={handleLogin}
+                style={{ height: hp(6.5) }}
+                className="bg-indigo-500 rounded-xl justify-center items-center"
+              >
+                <Text
+                  className="text-white font-bold tracking-wider"
+                  style={{ fontSize: hp(2.7) }}
+                >
+                  Sign In
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
 
           <View className="flex-row justify-center">
             <Text
