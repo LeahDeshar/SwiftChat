@@ -18,6 +18,7 @@ import { useRouter } from "expo-router";
 import { useRef } from "react";
 import { useState } from "react";
 import Loading from "../components/Loading";
+import CustomKeyboardView from "../components/CustomKeyboardView";
 
 export default function signIn() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function signIn() {
     }
   };
   return (
-    <View className={"flex-1"}>
+    <CustomKeyboardView className={"flex-1"}>
       <StatusBar style="dark" />
       <View
         style={{ paddingTop: hp(8), paddingHorizontal: wp(5) }}
@@ -52,7 +53,7 @@ export default function signIn() {
             style={{ fontSize: hp(4) }}
             className={"font-bold tracking-wider text-center"}
           >
-            Sign In
+            Login
           </Text>
           <View
             style={{ height: hp(7) }}
@@ -129,6 +130,6 @@ export default function signIn() {
           </View>
         </View>
       </View>
-    </View>
+    </CustomKeyboardView>
   );
 }
