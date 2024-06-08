@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Image } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { useAuth } from "../../context/authContext";
 
@@ -14,15 +14,6 @@ export default function Home() {
       <Pressable onPress={handleLogout}>
         <Text>Sign Out</Text>
       </Pressable>
-
-      <Image
-        style={{
-          height: 200,
-          width: 200,
-        }}
-        resizeMode="contain"
-        source={{ uri: user?.profileUrl }}
-      />
     </View>
   );
 }
