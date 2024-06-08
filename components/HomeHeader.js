@@ -8,10 +8,24 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { blurhash } from "../util/common";
 import { useAuth } from "../context/authContext";
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from "react-native-popup-menu";
+import { MenuItem } from "./CustomMenuItems";
+import { AntDesign, Feather } from "@expo/vector-icons";
+
 const ios = Platform.OS == "ios";
 const HomeHeader = () => {
   const { top } = useSafeAreaInsets();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const handleProfile = () => {};
+  const handleLogout = async () => {
+    await logout();
+  };
   return (
     <View
       style={{ paddingTop: ios ? top : top + 10 }}
@@ -24,19 +38,44 @@ const HomeHeader = () => {
           Chats
         </Text>
       </View>
-      <View>
-        <Image
-          style={{
-            aspectRatio: 1,
-            height: hp(4.6),
-            borderRadius: 100,
-          }}
-          source={{ uri: user?.profileUrl }}
-          placeholder={blurhash}
-        />
+      <View className={"flex-row items-center"}>
+        <Menu>
+          <MenuTrigger>
+            <Image
+              style={{
+                aspectRatio: 1,
+                height: hp(4.6),
+                borderRadius: 100,
+              }}
+              source={{ uri: user?.profileUrl }}
+              placeholder={blurhash}
+            />
+          </MenuTrigger>
+          <MenuOptions>
+            <MenuItem
+              text={"Profile"}
+              action={handleProfile}
+              value={null}
+              icon={<Feather name="user" size={hp(2.5)} color={"#737373"} />}
+            />
+            <Divider />
+            <MenuItem
+              text={"Sign Out"}
+              action={handleLogout}
+              value={null}
+              icon={
+                <AntDesign name="logout" size={hp(2.2)} color={"#737373"} />
+              }
+            />
+          </MenuOptions>
+        </Menu>
       </View>
     </View>
   );
 };
 
 export default HomeHeader;
+
+const Divider = () => {
+  return <View className={"p-[1px] w-full bg-neutral-200"}></View>;
+};

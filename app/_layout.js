@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Slot, useRouter, useSegments } from "expo-router";
 import { AuthContextProvider, useAuth } from "../context/authContext";
 import "../global.css";
-
+import { MenuProvider } from "react-native-popup-menu";
 const MainLayout = () => {
   const { isAuthenticated } = useAuth();
   const segments = useSegments();
@@ -22,9 +22,11 @@ const MainLayout = () => {
 // Import your global CSS file
 const Layout = () => {
   return (
-    <AuthContextProvider>
-      <MainLayout />
-    </AuthContextProvider>
+    <MenuProvider>
+      <AuthContextProvider>
+        <MainLayout />
+      </AuthContextProvider>
+    </MenuProvider>
   );
 };
 export default Layout;
