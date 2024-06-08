@@ -3,7 +3,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "../firebaseConfig";
+import { auth, db } from "../firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 
 export const AuthContext = createContext();
@@ -50,10 +50,12 @@ export const AuthContextProvider = ({ children }) => {
         userId: response?.user?.uid,
       });
     } catch (e) {
-      let msg = e.message
+      let msg = e.message;
+      if (msg.includes("(auth/invalid-email)")) msg = "Invalid email";
+      if (msg.includes("(auth/weak-password)")) msg = "Write Strong password";
       return {
-        success: true,
-        msg: e.message,
+        success: false,
+        msg: msg,
       };
     }
   };
