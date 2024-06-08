@@ -50,6 +50,7 @@ export const AuthContextProvider = ({ children }) => {
         userId: response?.user?.uid,
       });
     } catch (e) {
+      let msg = e.message
       return {
         success: true,
         msg: e.message,
