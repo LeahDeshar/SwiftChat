@@ -1,19 +1,49 @@
-import { View, Text, Pressable } from "react-native";
-import React from "react";
+import { View, Text, Pressable, ActivityIndicator } from "react-native";
+import React, { useEffect } from "react";
 import { useAuth } from "../../context/authContext";
-
+import { useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import ChatList from "../../components/ChatList";
+import { query, where, getDocs } from "firebase/firestore";
+import { userRef } from "../../firebaseConfig";
 export default function Home() {
-  const { logout, user } = useAuth();
-  console.log("home", user);
-  const handleLogout = async () => {
-    await logout();
+  const { user } = useAuth();
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (user?.uid) {
+      getUsers();
+    }
+  }, []);
+  const getUsers = async () => {
+    try {
+      const q = query(userRef, where("userId", "!=", user?.uid));
+
+      const querySnapshot = await getDocs(q);
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({ ...doc.data() });
+      });
+      // console.log("home data", data);
+      setUsers(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <View className={"flex-1 bg-white"}>
-      <Text>Home</Text>
-      <Pressable onPress={handleLogout}>
-        <Text>Sign Out</Text>
-      </Pressable>
+      <StatusBar style="light" />
+      {users.length > 0 ? (
+        <ChatList users={users} />
+      ) : (
+        <View className="flex items-center" style={{ top: hp(30) }}>
+          <ActivityIndicator size={"large"} />
+        </View>
+      )}
     </View>
   );
 }

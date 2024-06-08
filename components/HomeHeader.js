@@ -8,12 +8,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { blurhash } from "../util/common";
 import { useAuth } from "../context/authContext";
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from "react-native-popup-menu";
+import { Menu, MenuOptions, MenuTrigger } from "react-native-popup-menu";
 import { MenuItem } from "./CustomMenuItems";
 import { AntDesign, Feather } from "@expo/vector-icons";
 
@@ -51,7 +46,24 @@ const HomeHeader = () => {
               placeholder={blurhash}
             />
           </MenuTrigger>
-          <MenuOptions>
+          <MenuOptions
+            customStyles={{
+              optionsContainer: {
+                width: wp(40),
+                marginTop: hp(5),
+                borderRadius: 20,
+                backgroundColor: "#fff",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              },
+            }}
+          >
             <MenuItem
               text={"Profile"}
               action={handleProfile}
@@ -77,5 +89,5 @@ const HomeHeader = () => {
 export default HomeHeader;
 
 const Divider = () => {
-  return <View className={"p-[1px] w-full bg-neutral-200"}></View>;
+  return <View className={"p-[2px] w-full bg-neutral-200"}></View>;
 };
