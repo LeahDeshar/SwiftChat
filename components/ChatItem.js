@@ -7,8 +7,12 @@ import {
 import { Image } from "expo-image";
 import { blurhash } from "../util/common";
 const ChatItem = ({ item, noBorder, router }) => {
+  const openChatRoom = () => {
+    router.push("/chatRoom", { params: item });
+  };
   return (
     <TouchableOpacity
+      onPress={openChatRoom}
       className={`flex-row justify-between mx-4 items-center gap-3 mb-4 pb-2 ${
         noBorder ? "" : "border-b border-b-neutral-200"
       } `}
