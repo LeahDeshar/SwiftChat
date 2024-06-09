@@ -67,12 +67,16 @@ const chatRoom = () => {
       const docRef = doc(db, "rooms", roomId);
       const messagesRef = collection(docRef, "messages");
 
+      textRef.current = "";
+      if (inputRef) inputRef?.current?.clear();
       const newDoc = await addDoc(messagesRef, {
         userId: user?.userId,
         text: message,
         profileUrl: user?.profileUrl,
         senderName: user?.username,
         createdAt: Timestamp.fromDate(new Date()),
+
+        // clear after sending message
       });
     } catch (error) {
       Alert.alert("chatRoom", error.message);
