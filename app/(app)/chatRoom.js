@@ -1,5 +1,5 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import ChatRoomHeader from "../../components/ChatRoomHeader";
@@ -10,11 +10,52 @@ import {
 } from "react-native-responsive-screen";
 import { Feather } from "@expo/vector-icons";
 import CustomKeyboardView from "../../components/CustomKeyboardView";
+import { useAuth } from "../../context/authContext";
+import { getRoomId } from "../../util/common";
+import { Timestamp, addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 const chatRoom = () => {
   const item = useLocalSearchParams();
+  const { user } = useAuth();
   const router = useRouter();
   const [message, setMessage] = useState([]);
+  const textRef = useRef("");
   console.log("item chatroom", item);
+
+  useEffect(() => {
+    createRoomIfNotExists();
+  }, []);
+  const createRoomIfNotExists = async () => {
+    try {
+      let roomId = getRoomId(user?.userId, item?.userId);
+      await setDoc(
+        doc(db, "rooms", roomId, {
+          roomId,
+          createdAt: Timestamp.fromDate(new Date()),
+        })
+      );
+    } catch (error) {}
+  };
+  const handleSendMessage = async () => {
+    let message = textRef.current.trim();
+    if (!message) return;
+    try {
+      let roomId = getRoomId(user?.userId, item?.userId);
+
+      const docRef = doc(db, "rooms", roomId);
+      const messagesRef = collection(docRef, "messages");
+
+      const newDoc = await addDoc(messagesRef, {
+        userId: user?.userId,
+        text: message,
+        profileUrl: user?.profileUrl,
+        senderName: user?.username,
+        createdAt: Timestamp.fromDate(new Date()),
+      });
+    } catch (error) {
+      Alert.alert("chatRoom", error.message);
+    }
+  };
   return (
     <CustomKeyboardView inChat={true}>
       <View className="flex-1 bg-white">
@@ -33,11 +74,15 @@ const chatRoom = () => {
               }
             >
               <TextInput
+                onChangeText={(value) => (textRef.current = value)}
                 placeholder="Type message..."
                 style={{ fontSize: hp(2) }}
                 className="flex-1 mr-2"
               />
-              <TouchableOpacity className="bg-neutral-200 p-2 mr-[1px] rounded-full">
+              <TouchableOpacity
+                onPress={handleSendMessage}
+                className="bg-neutral-200 p-2 mr-[1px] rounded-full"
+              >
                 <Feather name="send" size={hp(2.7)} color={"#737373"} />
               </TouchableOpacity>
             </View>
