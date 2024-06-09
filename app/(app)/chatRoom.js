@@ -31,6 +31,8 @@ const chatRoom = () => {
   const textRef = useRef("");
   const inputRef = useRef(null);
 
+  console.log("item", item);
+
   useEffect(() => {
     createRoomIfNotExists();
     let roomId = getRoomId(user?.userId, item?.userId);
@@ -91,7 +93,11 @@ const chatRoom = () => {
         <View className="h-3 border-b border-neutral-300" />
         <View className="flex-1 justify-between bg-neutral-100 overflow-visible">
           <View className="flex-1">
-            <MessagesList messages={message} currentUser={user} />
+            <MessagesList
+              messages={message}
+              currentUser={user}
+              messageUser={item}
+            />
           </View>
           <View className="pt-2" style={{ marginBottom: hp(2.7) }}>
             <View

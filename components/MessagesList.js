@@ -2,7 +2,7 @@ import { View, Text, FlatList, ScrollView } from "react-native";
 import React from "react";
 import MessageItem from "./MessageItem";
 
-const MessagesList = ({ messages, currentUser }) => {
+const MessagesList = ({ messages, currentUser, messageUser }) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -14,6 +14,7 @@ const MessagesList = ({ messages, currentUser }) => {
             key={index}
             message={message}
             currentUser={currentUser}
+            messageUser={messageUser}
           />
         );
       })}
