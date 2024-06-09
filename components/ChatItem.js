@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Image } from "expo-image";
-import { blurhash, getRoomId } from "../util/common";
+import { blurhash, formatDate, getRoomId } from "../util/common";
 import {
   collection,
   doc,
@@ -36,7 +36,10 @@ const ChatItem = ({ item, noBorder, router, currentUser }) => {
   };
 
   const renderTime = () => {
-    return "Time";
+    if (lastMessage) {
+      let date = lastMessage?.createdAt;
+      return formatDate(new Date(date?.seconds * 1000));
+    }
   };
 
   const renderLastMessage = () => {
