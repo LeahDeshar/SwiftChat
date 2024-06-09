@@ -30,7 +30,6 @@ const chatRoom = () => {
   const [message, setMessage] = useState([]);
   const textRef = useRef("");
   const inputRef = useRef(null);
-  console.log("item chatroom", item);
 
   useEffect(() => {
     createRoomIfNotExists();

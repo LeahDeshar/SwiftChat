@@ -7,9 +7,8 @@ import {
 import { Image } from "expo-image";
 import { blurhash } from "../util/common";
 const ChatItem = ({ item, noBorder, router }) => {
-  // console.log("item-- chatItem", item);
   const openChatRoom = () => {
-    router.push("/chatRoom", { params: item });
+    router.push({ pathname: "/chatRoom", params: item });
   };
   return (
     <TouchableOpacity

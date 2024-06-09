@@ -8,7 +8,6 @@ import {
 } from "react-native-responsive-screen";
 
 const ChatRoomHeader = ({ user, router }) => {
-  console.log("chat header user", user);
   return (
     <Stack.Screen
       options={{
@@ -19,9 +18,9 @@ const ChatRoomHeader = ({ user, router }) => {
             <TouchableOpacity onPress={() => router.back()}>
               <Entypo name="chevron-left" size={hp(3.6)} color={"#737373"} />
             </TouchableOpacity>
-            <View>
+            <View className="flex-row items-center gap-3">
               <Image
-                source={user?.profileUrl}
+                source={{ uri: user?.profileUrl }}
                 style={{ height: hp(4.5), aspectRatio: 1, borderRadius: 100 }}
               />
               <Text
@@ -30,6 +29,12 @@ const ChatRoomHeader = ({ user, router }) => {
               >
                 {user?.username}
               </Text>
+              {/* <Text
+                style={{ fontSize: hp(2.5) }}
+                className="text-neutral-700 font-medium"
+              >
+                {user?.profileUrl}
+              </Text> */}
             </View>
           </View>
         ),
