@@ -12,7 +12,16 @@ import { Feather } from "@expo/vector-icons";
 import CustomKeyboardView from "../../components/CustomKeyboardView";
 import { useAuth } from "../../context/authContext";
 import { getRoomId } from "../../util/common";
-import { Timestamp, addDoc, collection, doc, setDoc } from "firebase/firestore";
+import {
+  Timestamp,
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 const chatRoom = () => {
   const item = useLocalSearchParams();
@@ -20,10 +29,23 @@ const chatRoom = () => {
   const router = useRouter();
   const [message, setMessage] = useState([]);
   const textRef = useRef("");
+  const inputRef = useRef(null);
   console.log("item chatroom", item);
 
   useEffect(() => {
     createRoomIfNotExists();
+    let roomId = getRoomId(user?.userId, item?.userId);
+    const docRef = doc(db, "rooms", roomId);
+    const messagesRef = collection(docRef, "messages");
+    const q = query(messagesRef, orderBy("createdAt", "asc"));
+
+    let unsub = onSnapshot(q, (snapshot) => {
+      let allMessages = snapshot.docs.map((doc) => {
+        return doc.data();
+      });
+      setMessage([...allMessages]);
+    });
+    return unsub;
   }, []);
   const createRoomIfNotExists = async () => {
     try {
@@ -36,6 +58,7 @@ const chatRoom = () => {
       );
     } catch (error) {}
   };
+
   const handleSendMessage = async () => {
     let message = textRef.current.trim();
     if (!message) return;
@@ -65,7 +88,7 @@ const chatRoom = () => {
         <View className="h-3 border-b border-neutral-300" />
         <View className="flex-1 justify-between bg-neutral-100 overflow-visible">
           <View className="flex-1">
-            <MessagesList message={message} />
+            <MessagesList messages={message} currentUser={user} />
           </View>
           <View className="pt-2" style={{ marginBottom: hp(2.7) }}>
             <View
@@ -74,6 +97,7 @@ const chatRoom = () => {
               }
             >
               <TextInput
+                ref={inputRef}
                 onChangeText={(value) => (textRef.current = value)}
                 placeholder="Type message..."
                 style={{ fontSize: hp(2) }}
