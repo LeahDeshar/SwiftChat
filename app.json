@@ -16,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.leahexpo1234.nativechat"
     },
     "android": {
       "adaptiveIcon": {
@@ -44,6 +45,12 @@
         "projectId": "e195fd17-40be-45c1-a041-40d0b1b61370"
       }
     },
-    "owner": "leahexpo1234"
+    "owner": "leahexpo1234",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e195fd17-40be-45c1-a041-40d0b1b61370"
+    }
   }
 }
