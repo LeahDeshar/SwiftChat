@@ -2,9 +2,15 @@ import { View, Text, FlatList, ScrollView } from "react-native";
 import React from "react";
 import MessageItem from "./MessageItem";
 
-const MessagesList = ({ messages, currentUser, messageUser }) => {
+const MessagesList = ({
+  scrollViewRef,
+  messages,
+  currentUser,
+  messageUser,
+}) => {
   return (
     <ScrollView
+      ref={scrollViewRef}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingTop: 10 }}
     >

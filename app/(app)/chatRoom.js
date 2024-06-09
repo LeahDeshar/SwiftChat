@@ -31,7 +31,7 @@ const chatRoom = () => {
   const textRef = useRef("");
   const inputRef = useRef(null);
 
-  console.log("item", item);
+  const scrollViewRef = useRef(null);
 
   useEffect(() => {
     createRoomIfNotExists();
@@ -48,6 +48,17 @@ const chatRoom = () => {
     });
     return unsub;
   }, []);
+
+  useEffect(() => {
+    updateScrollView();
+  }, [message]);
+
+  const updateScrollView = () => {
+    setTimeout(() => {
+      scrollViewRef?.current?.scrollToEnd({ animated: true });
+    });
+  };
+
   const createRoomIfNotExists = async () => {
     try {
       let roomId = getRoomId(user?.userId, item?.userId);
@@ -97,6 +108,7 @@ const chatRoom = () => {
               messages={message}
               currentUser={user}
               messageUser={item}
+              scrollViewRef={scrollViewRef}
             />
           </View>
           <View className="pt-2" style={{ marginBottom: hp(2.7) }}>

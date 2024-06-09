@@ -1,14 +1,54 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Image } from "expo-image";
-import { blurhash } from "../util/common";
-const ChatItem = ({ item, noBorder, router }) => {
+import { blurhash, getRoomId } from "../util/common";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { db } from "../firebaseConfig";
+const ChatItem = ({ item, noBorder, router, currentUser }) => {
+  const [lastMessage, setLastMessage] = useState(undefined);
+  useEffect(() => {
+    let roomId = getRoomId(currentUser?.userId, item?.userId);
+    const docRef = doc(db, "rooms", roomId);
+    const messagesRef = collection(docRef, "messages");
+    const q = query(messagesRef, orderBy("createdAt", "desc"));
+
+    let unsub = onSnapshot(q, (snapshot) => {
+      let allMessages = snapshot.docs.map((doc) => {
+        return doc.data();
+      });
+      setLastMessage(allMessages[0] ? allMessages[0] : null);
+    });
+    return unsub;
+  }, []);
+
   const openChatRoom = () => {
     router.push({ pathname: "/chatRoom", params: item });
+  };
+
+  const renderTime = () => {
+    return "Time";
+  };
+
+  const renderLastMessage = () => {
+    if (typeof lastMessage == "undefined") return "Loading...";
+    if (lastMessage) {
+      if (currentUser?.userId == lastMessage?.userId) {
+        return `You: ${lastMessage?.text}`;
+      }
+      return lastMessage?.text;
+    } else {
+      return "Say Hi 👋";
+    }
   };
   return (
     <TouchableOpacity
@@ -41,14 +81,14 @@ const ChatItem = ({ item, noBorder, router }) => {
             style={{ fontSize: hp(1.6) }}
             className="font-medium text-neutral-500"
           >
-            Time
+            {renderTime()}
           </Text>
         </View>
         <Text
           style={{ fontSize: hp(1.6) }}
           className="font-medium text-neutral-500"
         >
-          Last Message
+          {renderLastMessage()}
         </Text>
       </View>
     </TouchableOpacity>
