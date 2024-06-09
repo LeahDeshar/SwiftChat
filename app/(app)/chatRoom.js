@@ -1,4 +1,11 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  Keyboard,
+} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -46,7 +53,16 @@ const chatRoom = () => {
       });
       setMessage([...allMessages]);
     });
-    return unsub;
+
+    const KeyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+
+      updateScrollView
+    );
+    return () => {
+      unsub();
+      KeyboardDidShowListener.remove();
+    };
   }, []);
 
   useEffect(() => {
