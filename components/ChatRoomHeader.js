@@ -6,6 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ChatRoomHeader = ({ user, router }) => {
   return (
@@ -14,9 +15,9 @@ const ChatRoomHeader = ({ user, router }) => {
         title: "",
         headerShadowVisible: false,
         headerLeft: () => (
-          <View className="flex-row items-center gap-4 ">
+          <View className="flex-row items-center gap-4">
             <TouchableOpacity onPress={() => router.back()}>
-              <Entypo name="chevron-left" size={hp(3.6)} color={"#737373"} />
+              <Entypo name="chevron-left" size={hp(3.6)} color={"#ffe"} />
             </TouchableOpacity>
             <View className="flex-row items-center gap-3">
               <Image
@@ -25,24 +26,21 @@ const ChatRoomHeader = ({ user, router }) => {
               />
               <Text
                 style={{ fontSize: hp(2.5) }}
-                className="text-neutral-700 font-medium"
+                className="text-neutral-200 font-medium"
               >
                 {user?.username}
               </Text>
-              {/* <Text
-                style={{ fontSize: hp(2.5) }}
-                className="text-neutral-700 font-medium"
-              >
-                {user?.profileUrl}
-              </Text> */}
             </View>
           </View>
         ),
         headerRight: () => (
           <View className="flex-row items-center gap-8">
-            <Ionicons name="call" size={hp(2.8)} color={"#737373"} />
-            <Ionicons name="videocam" size={hp(2.8)} color={"#737373"} />
+            <Ionicons name="call" size={hp(2.8)} color={"#5b80b6"} />
+            <Ionicons name="videocam" size={hp(2.8)} color={"#5b80b6"} />
           </View>
+        ),
+        headerBackground: () => (
+          <LinearGradient colors={["#010f23", "#3b4051"]} style={{ flex: 1 }} />
         ),
       }}
     />
