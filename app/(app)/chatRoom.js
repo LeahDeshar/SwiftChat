@@ -30,6 +30,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import { LinearGradient } from "expo-linear-gradient";
 const chatRoom = () => {
   const item = useLocalSearchParams();
   const { user } = useAuth();
@@ -117,8 +118,21 @@ const chatRoom = () => {
         <StatusBar style="dark" />
         <ChatRoomHeader user={item} router={router} />
 
-        <View className="h-3 border-b border-neutral-300" />
-        <View className="flex-1 justify-between bg-neutral-100 overflow-visible">
+        <View className="h-3 border-b border-neutral-300 bg-white" />
+        {/* <View className="flex-1 justify-between bg-neutral-100 overflow-visible"> */}
+        <LinearGradient
+          // Background Linear Gradient
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height: 850,
+          }}
+          // colors={["rgba(1,0,19,1)", "transparent"]}
+          colors={["#4c669f", "#01040b", "#000103"]}
+        />
+        <View className="flex-1 justify-between  overflow-visible">
           <View className="flex-1">
             <MessagesList
               messages={message}
@@ -130,8 +144,11 @@ const chatRoom = () => {
           <View className="pt-2" style={{ marginBottom: hp(2.7) }}>
             <View
               className={
-                " mx-3 flex-row justify-between bg-white border p-2 border-neutral-300 rounded-full pl-5"
+                " mx-3 flex-row justify-between   p-2  rounded-full pl-5"
               }
+              style={{
+                backgroundColor: "rgba(255,255,255,0.265511)",
+              }}
             >
               <TextInput
                 ref={inputRef}
@@ -143,8 +160,11 @@ const chatRoom = () => {
               <TouchableOpacity
                 onPress={handleSendMessage}
                 className="bg-neutral-200 p-2 mr-[1px] rounded-full"
+                style={{
+                  backgroundColor: "#12499a",
+                }}
               >
-                <Feather name="send" size={hp(2.7)} color={"#737373"} />
+                <Feather name="send" size={hp(2.7)} color={"#fff"} />
               </TouchableOpacity>
             </View>
           </View>
