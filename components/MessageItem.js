@@ -7,7 +7,7 @@ import {
 const MessageItem = ({ message, currentUser, messageUser }) => {
   if (currentUser?.userId == message?.userId) {
     return (
-      <View className={"flex-row justify-end mb-3 mr-3"}>
+      <View className={"flex-row justify-end mb-3 mr-3 bg-black"}>
         <View style={{ width: wp(80) }}>
           <View className="flex self-end p-3 rounded-2xl bg-white border border-neutral-200">
             <Text style={{ fontSize: hp(1.9) }}>{message?.text}</Text>

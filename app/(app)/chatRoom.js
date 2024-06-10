@@ -113,7 +113,7 @@ const chatRoom = () => {
   };
   return (
     <CustomKeyboardView inChat={true}>
-      <View className="flex-1 bg-white">
+      <View className="flex-1 ">
         <StatusBar style="dark" />
         <ChatRoomHeader user={item} router={router} />
 
