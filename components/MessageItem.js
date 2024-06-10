@@ -4,18 +4,23 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { LinearGradient } from "expo-linear-gradient";
 const MessageItem = ({ message, currentUser, messageUser }) => {
   if (currentUser?.userId == message?.userId) {
     return (
       <View className={"flex-row justify-end mb-3 mr-3 "}>
         <View style={{ width: wp(80) }}>
           <View
-            className="flex self-end p-3 rounded-full bg-white border "
+            className="flex self-end     "
             style={{
-              backgroundColor: "rgba(255,255,255,0.6)",
+              backgroundColor: "rgba(255,255,255,0.26)",
+              borderRadius: 20,
+              padding: 12,
             }}
           >
-            <Text style={{ fontSize: hp(1.9) }}>{message?.text}</Text>
+            <Text style={{ fontSize: hp(1.9) }} className="text-white">
+              {message?.text}
+            </Text>
           </View>
         </View>
       </View>
@@ -32,9 +37,21 @@ const MessageItem = ({ message, currentUser, messageUser }) => {
               borderRadius: 100,
             }}
           />
-          <View className="flex self-start p-3 px-4 rounded-full bg-indigo-100 border border-indigo-200">
-            <Text style={{ fontSize: hp(1.9) }}>{message?.text}</Text>
-          </View>
+          <LinearGradient
+            colors={["#4c669f", "#192f6a"]}
+            style={{
+              alignSelf: "flex-start",
+              padding: 12,
+              paddingHorizontal: 25,
+              borderRadius: 20,
+            }}
+          >
+            <View>
+              <Text style={{ fontSize: hp(1.9) }} className="text-white">
+                {message?.text}
+              </Text>
+            </View>
+          </LinearGradient>
         </View>
       </View>
     );

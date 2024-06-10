@@ -155,7 +155,7 @@ const chatRoom = () => {
                 onChangeText={(value) => (textRef.current = value)}
                 placeholder="Type message..."
                 style={{ fontSize: hp(2) }}
-                className="flex-1 mr-2"
+                className="flex-1 mr-2 text-white"
               />
               <TouchableOpacity
                 onPress={handleSendMessage}
