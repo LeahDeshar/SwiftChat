@@ -96,5 +96,5 @@ const HomeHeader = () => {
 export default HomeHeader;
 
 const Divider = () => {
-  return <View className={"p-[2px] w-full bg-neutral-100"}></View>;
+  return <View className={"p-[2px] w-full bg-neutral-200"}></View>;
 };

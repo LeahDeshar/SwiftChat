@@ -57,7 +57,7 @@ const ChatItem = ({ item, noBorder, router, currentUser }) => {
     <TouchableOpacity
       onPress={openChatRoom}
       className={`flex-row justify-between mx-4 items-center gap-3 mb-4 pb-2 ${
-        noBorder ? "" : "border-b border-b-neutral-200"
+        noBorder ? "" : "border-b border-b-neutral-700"
       } `}
     >
       <View>
