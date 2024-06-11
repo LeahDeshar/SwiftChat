@@ -76,20 +76,20 @@ const ChatItem = ({ item, noBorder, router, currentUser }) => {
         <View className="flex-row justify-between">
           <Text
             style={{ fontSize: hp(1.8) }}
-            className="font-semibold text-neutral-800"
+            className="font-semibold text-neutral-300"
           >
             {item?.username}
           </Text>
           <Text
             style={{ fontSize: hp(1.6) }}
-            className="font-medium text-neutral-500"
+            className="font-medium text-neutral-400"
           >
             {renderTime()}
           </Text>
         </View>
         <Text
           style={{ fontSize: hp(1.6) }}
-          className="font-medium text-neutral-500"
+          className="font-medium text-neutral-400"
         >
           {renderLastMessage()}
         </Text>

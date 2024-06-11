@@ -9,33 +9,36 @@ const ChatList = ({ users, currentUser }) => {
   const router = useRouter();
   return (
     <View className={"flex-1"}>
-      <View className="flex flex-row mx-4 gap-x-5 my-8">
+      <View className="flex flex-row mx-4 gap-x-5 my-5">
         {users?.length > 0 &&
           users?.map((user, index) => (
             <View key={index} className=" items-center">
-              {/* <Image
-                source={{ uri: user.profileUrl }}
-                style={{
-                  aspectRatio: 1,
-                  height: 50,
-                  borderRadius: 100,
-                }}
-              /> */}
               <LinearGradient
-                colors={["#010f23", "#b3b3ba"]} // Example gradient colors
+                colors={["#1e66d9", "#0f444a"]}
                 style={{
-                  borderRadius: 50,
-                  padding: 3,
+                  height: 59,
+                  width: 59,
+                  borderRadius: 35,
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                <View>
+                <View
+                  style={{
+                    height: 55,
+                    width: 55,
+                    borderRadius: 30,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#b3b3ba",
+                  }}
+                >
                   <Image
                     source={{ uri: user.profileUrl }}
                     style={{
                       aspectRatio: 1,
                       height: 50,
                       borderRadius: 100,
-                      margin: 3,
                     }}
                   />
                 </View>
